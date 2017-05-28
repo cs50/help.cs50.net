@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cs50/help50.svg?branch=master)](https://travis-ci.org/cs50/help50)
+[![Build Status](https://travis-ci.org/cs50/help50-server.svg?branch=master)](https://travis-ci.org/cs50/help50-server)
 
 # Contributing
 
