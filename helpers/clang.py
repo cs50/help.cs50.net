@@ -804,7 +804,12 @@ def help(lines):
     if matches:
         if matches.group[0] == "main":
             response = ["Did you try to compile a file that doesn't contain a `main` function?"]
-            if len(lines) > 3 and "helpers" in lines[2]:
+
+            # $ make helpers
+            # ...
+            # clang: error: linker command failed with exit code 1 (use -v to see invocation)
+            # make: *** [helpers] Error 1
+            if len(lines) > 3 and "make: *** [helpers] Error" in lines[2]:
                 response.append("Are you compiling a `helpers.c` file instead of the file containing the program itself?")
         else:
             response = [
