@@ -30,7 +30,7 @@ def log(cmd, username, script, output):
 
 # gets unreviewed inputs with no output
 def unreviewed_matchless():
-    return session.query(Input).filter(Input.output_id==None, Input.reviewed==False).order_by(Input.created).all()
+    return Input.query.filter(Input.output_id==None, Input.reviewed==False).order_by(Input.created)
 
 # mark an input as reviewed
 def mark_reviewed(input_id):

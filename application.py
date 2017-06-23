@@ -1,9 +1,13 @@
-from flask import abort, Flask, render_template, request
+from flask import abort, Flask, render_template, redirect, request, session, url_for
 from flask_migrate import Migrate
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
+from tempfile import mkdtemp
+
 import flask_migrate
 import helpers
 import manage
+import math
 import model
 import os
 import re
@@ -18,6 +22,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.jinja_env.keep_trailing_newline = True
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+
+# configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_FILE_DIR"] = os.environ.get("SESSION_FILE_DIR") or mkdtemp()
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 # perform any migrations
 @app.before_first_request
@@ -80,7 +90,9 @@ def review():
         # user submitted password to access review page
         if ("password" in request.form):
             if (request.form.get("password") == os.environ["HELP50_PASSWORD"]):
-                return render_template("review.html", inputs=model.unreviewed_matchless())
+                session["authenticated"] = True
+                page = request.args.get("page", 1)
+                return show_review(page)
             else:
                 return render_template("review_auth.html", invalid=True)
 
@@ -90,9 +102,27 @@ def review():
                 model.mark_reviewed(input_id)
             return render_template("review.html", inputs=model.unreviewed_matchless())
 
-    # GET, show authorization page
+    # GET 
     else:
-        return render_template("review_auth.html")
+        if session.get("authenticated"):  # show requested page
+            page = request.args.get("page", 1)
+            return show_review(page)
+        else:  # show authorization page if not logged in
+            return render_template("review_auth.html")
+
+def show_review(page):
+    page = int(page)
+    page_size = 25
+    all_inputs = model.unreviewed_matchless()
+    inputs = all_inputs.paginate(page, page_size, False).items
+    num_pages = math.ceil(all_inputs.count() / page_size)
+    return render_template("review.html", inputs=inputs, page=page, num_pages=num_pages)
+
+@app.route("/logout")
+def logout():
+    session["authenticated"] = False
+    return redirect(url_for("review"))
+
 
 # 400 Bad Request
 @app.errorhandler(400)

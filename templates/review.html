@@ -95,6 +95,19 @@
     </style>
 {% endblock %}
 {% block body %}
+    <ul class="pagination">
+        {% if page > 1 %}
+            <li><a href="{{ url_for('review', page=page-1) }}">Previous</a></li>
+        {% else %}
+            <li class="disabled"><a href="">Previous</a></li>
+        {% endif %}
+        <li class="active"><a href="#">{{ page }} of {{ num_pages }}</a></li>
+        {% if page < num_pages %}
+            <li><a href="{{ url_for('review', page=page+1) }}">Next</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">Next</a></li>
+        {% endif %}
+    </ul>
     {% if inputs | length > 0 %}
         <form action="/review" method="post">
             <table>
@@ -123,4 +136,6 @@
     {% else %}
         <p>No unreviewed inputs.</p>
     {% endif %}
+    <br/>
+    <a class="btn btn-default" href="{{ url_for('logout') }}">Sign Out</a>
 {% endblock %}
