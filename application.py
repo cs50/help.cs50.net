@@ -2,6 +2,7 @@ from flask import abort, Flask, render_template, redirect, request, session, url
 from flask_migrate import Migrate
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
+from raven.contrib.flask import Sentry
 from tempfile import mkdtemp
 
 import flask_migrate
@@ -11,6 +12,10 @@ import math
 import model
 import os
 import re
+
+# monitoring
+if os.environ.get("SENTRY_DSN"):
+    sentry = Sentry(app, dsn=os.environ.get("SENTRY_DSN"))
 
 # application
 app = Flask(__name__)
@@ -102,7 +107,7 @@ def review():
                 model.mark_reviewed(input_id)
             return render_template("review.html", inputs=model.unreviewed_matchless())
 
-    # GET 
+    # GET
     else:
         if session.get("authenticated"):  # show requested page
             page = request.args.get("page", 1)
