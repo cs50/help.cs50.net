@@ -142,3 +142,7 @@ def ans(value):
 @app.template_filter("html")
 def html(value):
     return re.sub(r"`([^`]+)`", r"<strong>\1</strong>", value)
+
+@app.route("/test")
+def test():
+    1 / 0
