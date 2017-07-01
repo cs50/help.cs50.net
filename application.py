@@ -8,7 +8,6 @@ from tempfile import mkdtemp
 
 import flask_migrate
 import helpers
-import json
 import manage
 import math
 import model
