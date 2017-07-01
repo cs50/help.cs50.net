@@ -7,6 +7,11 @@ def help(lines):
     # unwrap long lines, since clang breaks long lines, indenting subsequent lines with 6 spaces
     lines = re.sub("\n      ", " ", "\n".join(lines)).splitlines()
 
+    # in case lines contained only an empty string
+    # https://docs.python.org/3/library/stdtypes.html#str.splitlines
+    if not lines:
+        return
+
     # $ clang foo.c
     # foo.c:13:25: error: adding 'int' to a string does not append to the string [-Werror,-Wstring-plus-int]
     matches = match(r"adding '(.+)' to a string does not append to the string", lines[0])
