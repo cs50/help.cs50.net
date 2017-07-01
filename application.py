@@ -1,3 +1,4 @@
+from builtins import range
 from flask import abort, Flask, render_template, redirect, request, session, url_for
 from flask_migrate import Migrate
 from flask_session import Session
@@ -63,7 +64,7 @@ def index():
 
         # iteratively ask helpers for help with lines[i:]
         lines = script.splitlines()
-        for i in iter(range(len(lines))):
+        for i in range(len(lines)):
 
             # iterate over helpers
             for helper in helpers.__all__:
