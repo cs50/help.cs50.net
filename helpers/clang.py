@@ -883,7 +883,7 @@ def help(lines):
     matches = match(r"unused variable '([^']+)'", lines[0])
     if matches:
         response = [
-            "It seems that the variable `{}` (delcared on line {} of `{}`) is never used in your program. Try either removing it altogether or using it.".format(matches.group[0], matches.line, matches.file)
+            "It seems that the variable `{}` (declared on line {} of `{}`) is never used in your program. Try either removing it altogether or using it.".format(matches.group[0], matches.line, matches.file)
         ]
         return (lines[0:1], response)
 
