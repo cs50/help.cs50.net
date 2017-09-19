@@ -13,6 +13,7 @@ import math
 import model
 import os
 import re
+import requests
 
 # application
 app = Flask(__name__)
@@ -81,6 +82,12 @@ def index():
 
         # unhelpful response
         model.log(request.form.get("cmd"), request.form.get("username"), request.form.get("script"), None)
+        if os.getenv("WEBHOOK"):
+            if request.form.get("cmd"):
+                message = "```\n$ {}\n{}\n```".format(request.form.get("cmd"), request.form.get("script"))
+            else:
+                message = "```\n{}\n```".format(request.form.get("script"))
+            requests.post(os.getenv("WEBHOOK"), json={"message": message})
         return render_template("unhelpful." + format, cmd=request.form.get("cmd"), script=script)
 
     # GET, HEAD, OPTION

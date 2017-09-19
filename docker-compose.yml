@@ -12,7 +12,7 @@ services:
       MYSQL_HOST: mysql
       MYSQL_PASSWORD: crimson
       MYSQL_USERNAME: root
-      SESSION_FILE_DIR: tmp 
+      SESSION_FILE_DIR: tmp
     links:
       - mysql
     ports:

@@ -6,4 +6,4 @@ ENV PATH /srv/www/opt/cs50/help50/bin:"$PATH"
 
 # dependencies
 RUN apt-get update && apt-get install -y libmysqlclient-dev
-RUN pip3 install Flask-Migrate Flask-SQLAlchemy Flask-Session Flask-Script mysqlclient pytz raven[flask]
+RUN pip3 install Flask-Migrate Flask-SQLAlchemy Flask-Session Flask-Script mysqlclient pytz raven[flask] requests
