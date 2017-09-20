@@ -1,9 +1,12 @@
 import re
+
+import regex
+
 def help(lines):
 
     # $ foo
     # bash: foo: command not found
-    matches = re.search(r"^bash: (.+): command not found", lines[0])
+    matches = re.search(r"^{}: (.+): command not found".format(regex.BASH_PATH), lines[0])
     if matches:
         if (matches.group(1) == "check"):
             response = ["Did you mean to execute `check50`?"]
@@ -21,7 +24,7 @@ def help(lines):
 
     # $ cd foo
     # bash: cd: foo: No such file or directory
-    matches = re.search(r"^bash: (?:line \d+: )?cd: (.+): No such file or directory", lines[0])
+    matches = re.search(r"^{}: (?:line \d+: )?cd: (.+): No such file or directory".format(regex.BASH_PATH), lines[0])
     if matches:
         response = [
             "Are you sure `{}` exists?".format(matches.group(1)),
@@ -31,7 +34,7 @@ def help(lines):
 
     # $ ./foo
     # bash: ./foo: No such file or directory
-    matches = re.search(r"^bash: ./(.+): No such file or directory", lines[0])
+    matches = re.search(r"^{}: ./(.+): No such file or directory".format(regex.BASH_PATH), lines[0])
     if matches:
         response = [
             "Are you sure `{}` exists?".format(matches.group(1)),
@@ -42,7 +45,7 @@ def help(lines):
 
     # $ cd foo
     # bash: cd: foo: Not a directory
-    matches = re.search(r"^bash: cd: (.+): Not a directory", lines[0])
+    matches = re.search(r"^{}: cd: (.+): Not a directory".format(regex.BASH_PATH), lines[0])
     if matches:
         response = [
             "Looks like you're trying to change directories, but `{}` isn't a directory.".format(matches.group(1)),
@@ -52,7 +55,7 @@ def help(lines):
 
     # $ ./foo
     # bash: ./foo: Permission denied
-    matches = re.search(r"^bash: .*?(([^/]+?)\.?([^/.]*)): Permission denied", lines[0])
+    matches = re.search(r"^{}: .*?(([^/]+?)\.?([^/.]*)): Permission denied".format(regex.BASH_PATH), lines[0])
     if matches:
         response = ["`{}` couldn't be executed.".format(matches.group(1))]
         if (matches.group(3).lower() == "c"):

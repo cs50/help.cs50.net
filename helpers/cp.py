@@ -1,4 +1,7 @@
 import re
+
+import regex
+
 def help(lines):
 
     # $ cp foo bar
@@ -6,7 +9,7 @@ def help(lines):
     #
     # $ cp foo baz/bar
     # cp: overwrite ‘baz/bar’?
-    matches = re.search(r"^cp: overwrite ‘(.+)’\?", lines[0])
+    matches = re.search(r"^{}cp: overwrite ‘(.+)’\?".format(regex.FILE_PATH), lines[0])
     if matches:
 
         # if "/" is present in destination path, then assume copying to a new directory

@@ -1,4 +1,7 @@
 import re
+
+import regex
+
 def help(lines):
 
     # $ rm foo
@@ -6,9 +9,9 @@ def help(lines):
     #
     # $ rm foo
     # rm: remove regular empty file ‘foo’?
-    matches = re.search(r"^rm: remove regular (?:empty )?file ‘(.+)’\?", lines[0])
+    matches = re.search(r"^{}rm: remove regular (?:empty )?file ‘(.+)’\?".format(regex.FILE_PATH), lines[0])
     if matches:
-        empty = re.search(r"^rm: remove regular empty file", lines[0])
+        empty = re.search(r"^.*rm: remove regular empty file", lines[0])
         response = [
             "The command you typed will delete the file `{}`".format(matches.group(1))
         ]
