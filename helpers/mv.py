@@ -9,7 +9,7 @@ def help(lines):
     #
     # $ mv foo baz/foo
     # mv: overwrite ‘baz/foo’?
-    matches = re.search(r"^{}mv: overwrite ‘(.+)’\{}".format(regex.FILE_PATH), lines[0])
+    matches = re.search(r"^{}mv: overwrite ‘(.+)’\?".format(regex.FILE_PATH), lines[0])
     if matches:
 
         # if a "/" is present in the destination path, assume moving a file; otherwise, renaming a file
