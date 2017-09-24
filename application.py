@@ -17,7 +17,7 @@ import requests
 
 # application
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://" + os.environ["MYSQL_USERNAME"] + ":" + os.environ["MYSQL_PASSWORD"] + "@" + os.environ["MYSQL_HOST"] + "/" + os.environ["MYSQL_DATABASE"]
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://" + os.environ["MYSQL_USERNAME"] + ":" + os.environ["MYSQL_PASSWORD"] + "@" + os.environ["MYSQL_HOST"] + "/" + os.environ["MYSQL_DATABASE"]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 # monitoring
@@ -30,7 +30,6 @@ app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
 # configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_FILE_DIR"] = os.environ.get("SESSION_FILE_DIR") or mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
@@ -150,7 +149,3 @@ def ans(value):
 @app.template_filter("html")
 def html(value):
     return re.sub(r"`([^`]+)`", r"<strong>\1</strong>", value)
-
-@app.route("/test")
-def test():
-    1 / 0
