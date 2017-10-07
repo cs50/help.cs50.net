@@ -118,7 +118,8 @@ def help(lines):
             for j in range(i+1, len(lines)):
                 if re.search(r"^==\d+== ERROR SUMMARY: 0 errors from 0 contexts", lines[j]):
                     response = [
-                        "Looks like your program doesn't have any memory-related errors!"
+                        "Looks like your program doesn't have any memory-related errors!",
+                        "Be sure, though, to test it with other inputs!"
                     ]
                     return ([line, "…", lines[j]], response)
 
