@@ -121,7 +121,7 @@ def help(lines):
                         "Looks like your program doesn't have any memory-related errors!",
                         "Be sure, though, to test it with other inputs!"
                     ]
-                    return ([line, "…", lines[j]], response)
+                    return ([line, "...", lines[j]], response)
 
 # Parses lines for stack frames, returning (frames, frame), where frames is the number of frames parsed,
 # and frame is a tuple with address, function, file, and line fields representing the likely source of an error.
