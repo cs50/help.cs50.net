@@ -20,7 +20,7 @@ services:
       - .:/srv/www
   mysql:
     container_name: help50_mysql
-    image: mysql
+    image: cs50/mysql
     environment:
       MYSQL_DATABASE: help50
       MYSQL_ROOT_PASSWORD: crimson
