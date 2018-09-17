@@ -43,7 +43,7 @@ def help(lines):
 
     # $ make foo.c
     # make: Nothing to be done for `foo.c'.
-    matches = re.search(r"^make: Nothing to be done for `([^']+).c'.", lines[0])
+    matches = re.search(r"^make: Nothing to be done for [`']([^']+).c'.", lines[0])
     if matches:
         response = [
             "Try compiling your program with `make {}` rather than `make {}.c`.".format(matches.group(1), matches.group(1))
