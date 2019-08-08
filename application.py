@@ -7,7 +7,6 @@ from raven.contrib.flask import Sentry
 from tempfile import mkdtemp
 
 import flask_migrate
-import helpers
 import manage
 import math
 import model
@@ -62,22 +61,16 @@ def index():
         # http://stackoverflow.com/a/14693789
         script = re.compile(r"\x1b[^m]*m").sub("", script)
 
-        # iteratively ask helpers for help with lines[i:]
-        lines = script.splitlines()
-        for i in range(len(lines)):
+        import help50.internal
+        help50.internal.load_helpers(os.getenv("HELPERS_PATH"))
+        help = help50.internal.get_help(script)
 
-            # iterate over helpers
-            for helper in helpers.__all__:
-
-                # ask helper for help
-                help = helpers.__dict__.get(helper).help(lines[i:])
-
-                # helpful response
-                if help:
-                    before, after = help
-                    after = " ".join(after)
-                    model.log(request.form.get("cmd"), request.form.get("username"), request.form.get("script"), after)
-                    return render_template("helpful." + format, script=script, before="\n".join(before), after=after)
+        # helpful response
+        if help:
+            before, after = help
+            after = " ".join(after)
+            model.log(request.form.get("cmd"), request.form.get("username"), request.form.get("script"), after)
+            return render_template("helpful." + format, script=script, before="\n".join(before), after=after)
 
         # unhelpful response
         model.log(request.form.get("cmd"), request.form.get("username"), request.form.get("script"), None)

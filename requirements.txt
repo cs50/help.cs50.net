@@ -1,0 +1,9 @@
+Flask-Migrate
+Flask-SQLAlchemy
+Flask-Session
+Flask-Script
+mysqlclient
+pytz
+raven[flask]
+requests
+git+https://github.com/cs50/help50@rewrite
