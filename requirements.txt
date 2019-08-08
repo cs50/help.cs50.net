@@ -6,4 +6,4 @@ mysqlclient
 pytz
 raven[flask]
 requests
-git+https://github.com/cs50/help50@rewrite
+help50>=3.0.0
