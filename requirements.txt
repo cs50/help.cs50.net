@@ -1,0 +1,9 @@
+Flask-Migrate
+Flask-SQLAlchemy
+Flask-Session
+Flask-Script
+mysqlclient
+pytz
+raven[flask]
+requests
+help50>=3.0.0

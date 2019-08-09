@@ -1,9 +1,7 @@
 FROM cs50/server
 EXPOSE 8080
 
-# for development
-ENV PATH /srv/www/opt/cs50/help50/bin:"$PATH"
-
 # dependencies
 RUN apt-get update && apt-get install -y libmysqlclient-dev
-RUN pip3 install Flask-Migrate Flask-SQLAlchemy Flask-Session Flask-Script mysqlclient pytz raven[flask] requests
+RUN pip3 install --upgrade -r requirements.txt
+CMD bash -c 'HELPERS_PATH=$(python3 docker-cmd.py) && export HELPERS_PATH && passenger start'

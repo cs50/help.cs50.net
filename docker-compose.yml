@@ -12,12 +12,14 @@ services:
       MYSQL_HOST: mysql
       MYSQL_PASSWORD: crimson
       MYSQL_USERNAME: root
+      HELP50_PATH: /tmp/help50
+      HELPERS_SLUG: cs50/helpers/master
     links:
       - mysql
     ports:
       - "8080:8080"
     volumes:
-      - .:/srv/www
+      - .:/var/www
   mysql:
     container_name: help50_mysql
     image: cs50/mysql
