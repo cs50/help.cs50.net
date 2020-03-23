@@ -7,3 +7,4 @@ pytz
 raven[flask]
 requests
 help50>=3.0.0
+werkzeug<1.0.0
