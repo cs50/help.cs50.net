@@ -1,4 +1,4 @@
-FROM cs50/server
+FROM cs50/server:focal
 EXPOSE 8080
 
 # dependencies
