@@ -13,11 +13,16 @@ import model
 import os
 import re
 import requests
+import urllib.parse
 
 # application
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://" + os.environ["MYSQL_USERNAME"] + ":" + os.environ["MYSQL_PASSWORD"] + "@" + os.environ["MYSQL_HOST"] + "/" + os.environ["MYSQL_DATABASE"]
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://{}:{}@{}/{}".format(
+    urllib.parse.quote_plus(os.environ["MYSQL_USERNAME"]),
+    urllib.parse.quote_plu(os.environ["MYSQL_PASSWORD"]),
+    urllib.parse.quote_plu(os.environ["MYSQL_HOST"]),
+    urllib.parse.quote_plu(os.environ["MYSQL_DATABASE"]))
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
 # monitoring
 Sentry(app)
