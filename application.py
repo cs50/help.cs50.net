@@ -19,9 +19,9 @@ import urllib.parse
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://{}:{}@{}/{}".format(
     urllib.parse.quote_plus(os.environ["MYSQL_USERNAME"]),
-    urllib.parse.quote_plu(os.environ["MYSQL_PASSWORD"]),
-    urllib.parse.quote_plu(os.environ["MYSQL_HOST"]),
-    urllib.parse.quote_plu(os.environ["MYSQL_DATABASE"]))
+    urllib.parse.quote_plus(os.environ["MYSQL_PASSWORD"]),
+    urllib.parse.quote_plus(os.environ["MYSQL_HOST"]),
+    urllib.parse.quote_plus(os.environ["MYSQL_DATABASE"]))
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
 # monitoring
