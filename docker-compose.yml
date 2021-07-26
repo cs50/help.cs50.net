@@ -13,7 +13,7 @@ services:
       MYSQL_PASSWORD: crimson
       MYSQL_USERNAME: root
       HELP50_PATH: /tmp/help50
-      HELPERS_SLUG: cs50/helpers/main
+      HELPERS_SLUG: cs50/helpers/master
     links:
       - mysql
     ports:

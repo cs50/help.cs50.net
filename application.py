@@ -7,6 +7,7 @@ from raven.contrib.flask import Sentry
 from tempfile import mkdtemp
 
 import flask_migrate
+import manage
 import math
 import model
 import os
@@ -16,8 +17,6 @@ import urllib.parse
 
 # application
 app = Flask(__name__)
-db = SQLAlchemy(app)
-Migrate(app, db)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://{}:{}@{}/{}".format(
     urllib.parse.quote_plus(os.environ["MYSQL_USERNAME"]),
     urllib.parse.quote_plu(os.environ["MYSQL_PASSWORD"]),
@@ -39,38 +38,11 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-class Output(db.Model):
-    __tablename__ = "outputs"
-    mysql_default_charset = "utf8",
-    mysql_collate = "utf8_general_ci"
-    id = db.Column(db.BigInteger, primary_key=True, nullable=False, autoincrement=True)
-    output = db.Column(db.Text)
-
-class Input(db.Model):
-    __tablename__ = "inputs"
-    mysql_default_charset = "utf8",
-    mysql_collate =  "utf8_general_ci"
-    id = db.Column(db.BigInteger, primary_key=True, nullable=False, autoincrement=True)
-    cmd = db.Column(db.String(length=1024), nullable=True)
-    _script = db.Column("script", db.Text, nullable=False)
-    username = db.Column(db.String(length=32), nullable=True, index=True)
-    created = db.Column(db.DateTime, default=func.now(), index=True)
-    output_id = db.Column(db.BigInteger, db.ForeignKey("outputs.id"), nullable=True)
-    reviewed = db.Column(db.Boolean, default=False, index=True)
-
-    # getter, strips ANSI codes
-    @property
-    def script(self):
-        return re.compile(r"\x1b[^m]*m").sub("", self._script)
-
-    # setter, preserves ANSI codes
-    @script.setter
-    def script(self, script):
-        self._script = script
-
 # perform any migrations
 @app.before_first_request
 def configure():
+    db = SQLAlchemy(app)
+    migrate = Migrate(app, db)
     flask_migrate.upgrade()
 
 # /
