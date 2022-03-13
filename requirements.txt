@@ -2,6 +2,7 @@ Flask-Migrate
 Flask-SQLAlchemy
 Flask-Session
 Flask-Script
+markupsafe==2.0.1
 mysqlclient
 pytz
 raven[flask]
