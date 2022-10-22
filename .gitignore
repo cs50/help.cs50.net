@@ -1,7 +1,6 @@
 .*
 !.github
 !.gitignore
-!.travis.yml
 *.deb
 *.pkg.tar.xz
 *.pyc
