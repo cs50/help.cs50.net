@@ -1,5 +1,6 @@
 .*
-!.github
+!.ebextensions/
+!.github/
 !.gitignore
 *.deb
 *.pkg.tar.xz
