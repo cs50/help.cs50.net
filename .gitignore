@@ -6,5 +6,6 @@
 *.pkg.tar.xz
 *.pyc
 *.rpm
+flask_session/
 __pycache__/
 tmp/
