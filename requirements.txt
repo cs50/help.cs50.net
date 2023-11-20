@@ -10,4 +10,4 @@ raven[flask]
 requests
 SQLAlchemy==1.4.49
 help50>=3.0.0
-werkzeug==1.0.1
+werkzeug==2.3.8
