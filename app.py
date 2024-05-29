@@ -3,7 +3,6 @@ from flask import abort, Flask, render_template, redirect, request, session, url
 from flask_migrate import Migrate
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
-from raven.contrib.flask import Sentry
 from tempfile import mkdtemp
 
 import flask_migrate
@@ -13,6 +12,7 @@ import model
 import os
 import re
 import requests
+import sentry_sdk
 import urllib.parse
 
 # application
@@ -25,7 +25,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://{}:{}@{}/{}".format(
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
 # monitoring
-Sentry(app)
+sentry_sdk.init()
 
 # whitespace control
 # http://jinja.pocoo.org/docs/dev/templates/
